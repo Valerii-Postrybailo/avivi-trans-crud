@@ -17,8 +17,8 @@ class Balance(models.Model):
 
 
 class Transaction(models.Model):
-    id: models.AutoField(primary_key=True)
-    user: models.ForeignKey('User', on_delete=models.CASCADE)
-    hash: models.CharField(max_length=64, unique=True)
-    amount: models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    date: models.DateTimeField(default=timezone.now)
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    hash = models.CharField(max_length=64, unique=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
+    date = models.DateTimeField(default=timezone.now)

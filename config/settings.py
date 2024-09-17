@@ -14,7 +14,7 @@ import os
 import environ
 
 env = environ.Env(
-    DEBUG=(bool, False),
+    DJANGO_DEBUG=(bool, False),
 )
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -23,14 +23,14 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-DEBUG = env('DEBUG')
+DEBUG = env('DJANGO_DEBUG')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['valeratest.serveo.net', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     'apps.crud_transaction',
     'apps.user',
+    'apps.tg_bot',
 ]
 
 MIDDLEWARE = [
@@ -82,13 +83,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 DATABASES = {
     'default': env.db(),
@@ -144,6 +138,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
 
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    
+    'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.IsAdminUser',
+        ]
 }
 
 AUTH_USER_MODEL = 'user.CustomUser'

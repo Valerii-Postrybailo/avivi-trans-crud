@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% block title %}Tg bots{% endblock %}
+{% block h1 %}<h1 style="text-align:center; margin:20px;">Telegram bots</h1>{% endblock %}
+
+{% block bot_list %}
+<div class="container mt-4">
+    <h2>Create new bot</h2>
+    <form action="{% url 'tg_bot_creating' %}" method="POST">
+    {% csrf_token %}
+        <div class="form-group" style="margin-top: 15px;">
+            <label for="id_bot_name">Bot Name</label>
+            <input type="text" class="form-control" id="id_bot_name_zero" name="bot_name">
+        </div>
+
+        <div class="form-group" style="margin-top: 15px;">
+            <label for="id_api_key">API Key</label>
+            <input type="text" class="form-control" id="id_api_key_zero" name="api_key">
+        </div>
+
+        <div class="form-group" style="margin-top: 15px;">
+            <label for="id_webhook_url">Webhook URL</label>
+            <input type="url" class="form-control" id="id_webhook_url_zero" name="webhook_url">
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="margin-top:20px;">Create</button>
+    {{form.errors}}
+    </form>
+</div>
+
+<h2>Bot list</h2>
+{% if tg_bots %}
+<div class="accordion" id="accordionExample" style="margin-bottom:50px;">
+    {% for tg_bot in tg_bots%}
+    <div class="accordion-item">
+    <h2 class="accordion-header" id="heading{{ tg_bot.pk }}">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ tg_bot.pk }}" aria-expanded="true" aria-controls="collapse{{ tg_bot.pk }}">
+        {{tg_bot.bot_name}}
+      </button>
+    </h2>
+    <div id="collapse{{ tg_bot.pk }}" class="accordion-collapse collapse" aria-labelledby="heading{{ tg_bot.pk }}" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <div class="container mt-4">
+            <h2>Bot Settings</h2>
+            <form action="{% url 'tg_bot_updating' pk=tg_bot.pk %}" method="POST" >
+              {% csrf_token %}
+
+              <div class="form-group" style="margin-top: 15px;">
+                <label for="id_bot_name">Bot Name</label>
+                <input type="text" class="form-control" id="id_bot_name" name="bot_name" value="{{ tg_bot.bot_name }}">
+              </div>
+
+              <div class="form-group" style="margin-top: 15px;">
+                <label for="id_api_key">API Key</label>
+                <input type="text" class="form-control" id="id_api_key" name="api_key" value="{{ tg_bot.api_key }}">
+              </div>
+
+                <div class="form-group" style="margin-top: 15px;">
+                <label for="id_host">HOST</label>
+                <input type="text" class="form-control" id="id_host" name="host" value="{{ tg_bot.host }}">
+              </div>
+
+              <div class="form-group" style="margin-top: 15px;">
+                <label for="id_port">PORT</label>
+                <input type="text" class="form-control" id="id_port" name="port" value="{{ tg_bot.port }}">
+              </div>
+
+              <div class="form-group" style="margin-top: 10px;">
+                  <label for="id_webhook_url">Webhook URL</label>
+                  <div style="display:flex; align-items:center;">
+                      <input type="url" class="form-control" id="id_webhook_url" name="webhook_url" value="{{ tg_bot.webhook_url }}">
+                  </div>
+              </div>
+
+                <button type="submit" class="btn btn-primary" style="margin-top:10px;">Update</button>
+
+                {{form.errors}}
+            </form>
+
+            <div style="display:flex;">
+                <form action="{% url 'tg_bot_deleting' pk=tg_bot.pk %}" method="POST" style="margin:0px 10px 0px 0px;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger" >Delete</button>
+                    {{ form.errors }}
+                </form>
+
+                <form  action="{% url 'set_webhook' %}" method="POST" >
+                    {% csrf_token %}
+                    <input type="hidden" name="bot_id" value="{{ tg_bot.id }}">
+                    <button type="submit" class="btn btn-success">Set/Remove Webhook</button>
+                    {{ form.errors }}
+                </form>
+
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+{% endblock %}

@@ -2,12 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('bots/', views.TelegramSettingsList.as_view(), name='tg_bot_list'),
-    path('bots_create/', views.TelegramSettingsCreate.as_view(), name="tg_bot_creating"),
-    path('bots_delete/<int:pk>/', views.TelegramSettingsDelete.as_view(), name="tg_bot_deleting"),
-    path('bots_update/<int:pk>/', views.TelegramSettingsUpdate.as_view(), name="tg_bot_updating"),
+    path('bots/', views.TelegramSettingsView.as_view(), name='tg_bot_list'),
+    path('bots/<int:pk>/', views.TelegramSettingsView.as_view(), name="tg_bot_operation_by_id"),
 
-    path('bot_set_webhook', views.enable_webhook_view, name="set_webhook"),
-
-    path('forbidden/', views.forbidden, name='forbidden'),
+    path('bot_webhook/', views.bot_service, name="webhook"),
+    path('set_remove_webhook/', views.set_remove_webhook, name="set_webhook"),
 ]

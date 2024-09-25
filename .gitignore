@@ -5,7 +5,6 @@ __pycache__/
 
 schema.yml
 .ssh
-private.key
 
 # C extensions
 *.so

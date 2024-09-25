@@ -30,7 +30,8 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = ['valeratest.serveo.net', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [env('HTTP_HOST_HEADER'), '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = [env('HTTPS_HOST')]
 
 # Application definition
 
@@ -142,6 +143,8 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
             'rest_framework.permissions.IsAdminUser',
         ]
+
+
 }
 
 AUTH_USER_MODEL = 'user.CustomUser'

@@ -6,6 +6,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse_lazy, reverse
 from django.http import JsonResponse
 
+from telegram import Update
+
 from .models import TelegramSettings
 from .forms import TelegramSettingsCreateForm
 from .mixins import SuperUserRequiredMixin
@@ -54,20 +56,31 @@ class TelegramSettingsView(SuperUserRequiredMixin, View):
 
         return JsonResponse({}, status=204)
 
-
 @csrf_exempt
 def bot_service(request):
-    print("bot working!")
-    return JsonResponse({"status": "ok"}, status=200)
+    if request.method == 'POST':
+        try:
+            bot.initialize_bot()
+            update_data = json.loads(request.body.decode('utf-8'))
+            update = Update.de_json(update_data, bot.bot_instance)
+            bot.dispatcher_instance.process_update(update)
+            return JsonResponse({"status": "ok"}, status=200)
+        except ValueError as error:
+            print("Error occurred:", error)
+            return JsonResponse({"error": str(error)}, status=400)
 
 
 @csrf_exempt
 def set_remove_webhook(request):
     if request.method == "POST":
-        bot_id = request.POST.get('bot_id')
+
+        bot_token = request.POST.get('bot_token')
+
         try:
-            bot.set_remove_webhook(bot_id)
-        except:
+            settings = bot.get_bot_settings(bot_token)
+            bot.set_remove_webhook(settings)
+        except ValueError as error:
             print("Smth went wrong...")
+            print(error)
 
         return redirect(reverse('tg_bot_list'))

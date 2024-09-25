@@ -1,6 +1,6 @@
 import requests
 
-from telegram import Update, Bot
+from telegram import Bot
 from telegram.ext import Dispatcher, CommandHandler, MessageHandler, Filters
 
 from .handlers import *
@@ -10,26 +10,25 @@ bot_instance = None
 dispatcher_instance = None
 
 
-def initialize_bot():
+def initialize_bot(settings):
     global bot_instance, dispatcher_instance
     if not bot_instance or not dispatcher_instance:
-        bot_instance = Bot(token="your harcode token")
+        bot_instance = Bot(token=settings.api_key)
         dispatcher_instance = Dispatcher(bot_instance, None, use_context=True)
 
         dispatcher_instance.add_handler(CommandHandler('start', start))
         dispatcher_instance.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_language_selection))
 
 
-def get_bot_settings(bot_token):
+def get_bot_settings(bot_id):
     try:
-        settings = TelegramSettings.objects.get(api_key=bot_token)
-        print("settings", settings)
+        settings = TelegramSettings.objects.get(id=bot_id)
         return settings
     except TelegramSettings.DoesNotExist:
-        raise ValueError(f"Bot settings with token {bot_token} does not exist.")
+        raise ValueError(f"Bot settings with ID {bot_id} does not exist.")
 
 
-def set_remove_webhook(settings):
+def set_remove_webhook(settings, bot_id):
     webhook_info_url = f"https://api.telegram.org/bot{settings.api_key}/getWebhookInfo"
     set_webhook_url = f"https://api.telegram.org/bot{settings.api_key}/setWebhook"
     delete_webhook_url = f"https://api.telegram.org/bot{settings.api_key}/deleteWebhook"
@@ -40,5 +39,5 @@ def set_remove_webhook(settings):
         requests.post(delete_webhook_url)
         print("Webhook deleted!")
     else:
-        requests.post(set_webhook_url, data={'url': "https://valeratest.serveo.net/bot_webhook/"})
+        requests.post(set_webhook_url, data={'url': f"{settings.webhook_url}/bot_webhook/{bot_id}/"})
         print("Webhook is working!")

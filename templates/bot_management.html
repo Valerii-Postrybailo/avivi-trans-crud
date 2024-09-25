@@ -68,7 +68,6 @@
                 <form action="{% url 'set_webhook' %}" method="POST" style="margin:0px 0px 0px 0px;">
                     {% csrf_token %}
                     <input type="hidden" name="bot_id" value="{{ tg_bot.id }}">
-                    <input type="hidden" name="bot_token" value="{{ tg_bot.api_key }}">
                     <button type="submit" class="btn btn-success">Set/Remove Webhook</button>
                     {{ form.errors }}
                 </form>

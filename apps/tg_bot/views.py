@@ -57,10 +57,11 @@ class TelegramSettingsView(SuperUserRequiredMixin, View):
         return JsonResponse({}, status=204)
 
 @csrf_exempt
-def bot_service(request):
+def bot_service(request, bot_id):
     if request.method == 'POST':
         try:
-            bot.initialize_bot()
+            settings = bot.get_bot_settings(bot_id)
+            bot.initialize_bot(settings)
             update_data = json.loads(request.body.decode('utf-8'))
             update = Update.de_json(update_data, bot.bot_instance)
             bot.dispatcher_instance.process_update(update)
@@ -73,12 +74,10 @@ def bot_service(request):
 @csrf_exempt
 def set_remove_webhook(request):
     if request.method == "POST":
-
-        bot_token = request.POST.get('bot_token')
-
+        bot_id = request.POST.get('bot_id')
         try:
-            settings = bot.get_bot_settings(bot_token)
-            bot.set_remove_webhook(settings)
+            settings = bot.get_bot_settings(bot_id)
+            bot.set_remove_webhook(settings, bot_id)
         except ValueError as error:
             print("Smth went wrong...")
             print(error)

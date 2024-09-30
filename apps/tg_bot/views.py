@@ -72,12 +72,12 @@ def bot_service(request, bot_id):
 
 
 @csrf_exempt
-def set_remove_webhook(request):
+def change_webhook_state_view(request):
     if request.method == "POST":
         bot_id = request.POST.get('bot_id')
         try:
             settings = bot.get_bot_settings(bot_id)
-            bot.set_remove_webhook(settings, bot_id)
+            bot.change_webhook_state(settings, bot_id)
         except ValueError as error:
             print("Smth went wrong...")
             print(error)

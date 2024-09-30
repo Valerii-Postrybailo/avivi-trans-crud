@@ -1,10 +1,14 @@
 import requests
 
+from django.conf import settings
+
 from telegram import Bot
 from telegram.ext import Dispatcher, CommandHandler, MessageHandler, Filters
 
-from .handlers import *
+from .handlers import start, handle_language_selection
 from apps.tg_bot.models import TelegramSettings
+
+TELEGRAM_API_URL = settings.TELEGRAM_API_URL
 
 bot_instance = None
 dispatcher_instance = None
@@ -28,10 +32,10 @@ def get_bot_settings(bot_id):
         raise ValueError(f"Bot settings with ID {bot_id} does not exist.")
 
 
-def set_remove_webhook(settings, bot_id):
-    webhook_info_url = f"https://api.telegram.org/bot{settings.api_key}/getWebhookInfo"
-    set_webhook_url = f"https://api.telegram.org/bot{settings.api_key}/setWebhook"
-    delete_webhook_url = f"https://api.telegram.org/bot{settings.api_key}/deleteWebhook"
+def change_webhook_state(settings, bot_id):
+    webhook_info_url = f"{TELEGRAM_API_URL}/bot{settings.api_key}/getWebhookInfo"
+    set_webhook_url = f"{TELEGRAM_API_URL}/bot{settings.api_key}/setWebhook"
+    delete_webhook_url = f"{TELEGRAM_API_URL}/bot{settings.api_key}/deleteWebhook"
 
     webhook_info_response = requests.get(webhook_info_url)
 

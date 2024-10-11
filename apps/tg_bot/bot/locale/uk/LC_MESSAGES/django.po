@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-28 01:19+0300\n"
+"POT-Creation-Date: 2024-10-11 13:28+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,6 +20,57 @@ msgstr ""
 "11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
 "100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
 "(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
-#: .\handlers.py:28 .\handlers.py:32
-msgid "Language selected"
+
+#: .\bot\handlers.py:19 .\bot\handlers.py:108
+msgid "catalog btn"
+msgstr "Каталог"
+
+#: .\bot\handlers.py:21
+msgid "greeting and menu"
+msgstr "Вітаємо! Виберіть, що вас цікавить:"
+
+#: .\bot\handlers.py:41
+msgid "{} back_arrow_btn"
+msgstr "{} Назад"
+
+#: .\bot\handlers.py:43
+msgid "next_arrow_btn {}"
+msgstr "Наступна {}"
+
+#: .\bot\handlers.py:46
+msgid "page {} of {}"
+msgstr "Сторінка {} з {}"
+
+#: .\bot\handlers.py:54 .\bot\handlers.py:57 .\bot\handlers.py:59
+msgid "here is our catalog"
+msgstr "Наший каталог:"
+
+#: .\bot\handlers.py:68
+msgid "back_btn"
+msgstr "Назад"
+
+#: .\bot\handlers.py:78
+msgid ""
+"Name: {}\n"
+"Description: {}\n"
+"Price: {}\n"
+"Stock Quantity: {}\n"
+msgstr ""
+"Назва: {}\n"
+"Опис: {}\n"
+"Ціна: {}\n"
+"К-сть. на складі: {}\n"
+
+#: .\bot\handlers.py:90
+msgid "Product not found."
+msgstr "Продукт не знайдено."
+
+#: .\bot\handlers.py:99 .\bot\handlers.py:105
+msgid "language selected"
 msgstr "Ви вибрали українську мову."
+
+#~ msgid "support btn"
+#~ msgstr "Підтримка"
+
+#~ msgid "tech support link"
+#~ msgstr "По всіх питаннях технічної підтримки:"

@@ -24,8 +24,8 @@
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                   <li><a href="{% url 'main_page' %}" class="nav-link px-2 text-white">Home</a></li>
-                  <li><a href="{% url 'tg_users_list' %}" class="nav-link px-2 text-white">Users</a></li>
                     {% if request.user.is_superuser %}
+                  <li><a href="{% url 'tg_users_list' %}" class="nav-link px-2 text-white">Users</a></li>
                   <li><a href="{% url 'tg_bot_list' %}" class="nav-link px-2 text-white">Bots</a></li>
                     {% endif %}
                   <li><a href="{% url 'products_list_page' %}" class="nav-link px-2 text-white">Store</a></li>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-28 01:19+0300\n"
+"POT-Creation-Date: 2024-10-11 13:28+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,63 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: .\handlers.py:28 .\handlers.py:32
-msgid "Language selected"
+
+#: .\bot\handlers.py:19 .\bot\handlers.py:108
+msgid "catalog btn"
+msgstr "Catalog"
+
+#: .\bot\handlers.py:21
+msgid "greeting and menu"
+msgstr "Welcome! Select an option:"
+
+#: .\bot\handlers.py:41
+msgid "{} back_arrow_btn"
+msgstr "{} Back"
+
+#: .\bot\handlers.py:43
+msgid "next_arrow_btn {}"
+msgstr "Next {}"
+
+#: .\bot\handlers.py:46
+msgid "page {} of {}"
+msgstr "Page {} of {}"
+
+#: .\bot\handlers.py:54 .\bot\handlers.py:57 .\bot\handlers.py:59
+msgid "here is our catalog"
+msgstr "Here is our catalog:"
+
+#: .\bot\handlers.py:68
+msgid "back_btn"
+msgstr "Back"
+
+#: .\bot\handlers.py:78
+#, fuzzy
+#| msgid ""
+#| "Name: {}\n"
+#| "Description: {}\n"
+#| "Price: {}\n"
+#| "Stock Quantity: {}\n"
+msgid ""
+"Name: {}\n"
+"Description: {}\n"
+"Price: {}\n"
+"Stock Quantity: {}\n"
+msgstr ""
+"Name: {}\n"
+"Description: {}\n"
+"Price: {}\n"
+"Stock Quantity: {}\n"
+
+#: .\bot\handlers.py:90
+msgid "Product not found."
+msgstr "Product not found."
+
+#: .\bot\handlers.py:99 .\bot\handlers.py:105
+msgid "language selected"
 msgstr "You selected English."
+
+#~ msgid "support btn"
+#~ msgstr "Support"
+
+#~ msgid "tech support link"
+#~ msgstr "For all technical support questions:"

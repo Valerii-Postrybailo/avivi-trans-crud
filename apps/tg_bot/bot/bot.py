@@ -3,9 +3,9 @@ import requests
 from django.conf import settings
 
 from telegram import Bot
-from telegram.ext import Dispatcher, CommandHandler, MessageHandler, Filters
+from telegram.ext import Dispatcher, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 
-from .handlers import start, handle_language_selection
+from .handlers import start, handle_menu_selection, product_detail, handle_callback_query, show_catalog
 from apps.tg_bot.models import TelegramSettings
 
 TELEGRAM_API_URL = settings.TELEGRAM_API_URL
@@ -20,8 +20,16 @@ def initialize_bot(settings):
         bot_instance = Bot(token=settings.api_key)
         dispatcher_instance = Dispatcher(bot_instance, None, use_context=True)
 
-        dispatcher_instance.add_handler(CommandHandler('start', start))
-        dispatcher_instance.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_language_selection))
+        dispatcher_instance.add_handler(CommandHandler(['start', 'restart'], start))
+        dispatcher_instance.add_handler(CommandHandler("catalog", show_catalog))
+
+        dispatcher_instance.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_menu_selection))
+
+        dispatcher_instance.add_handler(
+            CallbackQueryHandler(lambda update, context: product_detail(update, context, settings),
+                                 pattern=r'^product_'))
+
+        dispatcher_instance.add_handler(CallbackQueryHandler(handle_callback_query))
 
 
 def get_bot_settings(bot_id):

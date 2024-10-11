@@ -4,7 +4,8 @@ __pycache__/
 *$py.class
 
 schema.yml
-
+.ssh
+media/products
 # C extensions
 *.so
 
@@ -124,7 +125,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-config/avivi_start/.env
 .venv
 venv
 .env

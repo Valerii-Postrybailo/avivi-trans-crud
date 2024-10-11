@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block title %}Store{% endblock %}
+{% block h1 %}{% endblock %}
+{% block store %}
+<div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+        {% if request.user.is_superuser %}
+          <a href="{% url 'create_product_page' %}" class="btn btn-sm btn-outline-dark d-flex align-items-center justify-content-center">Add product</a>
+        {% endif %}
+
+        {% for product in store_product_list %}
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="{{ product.image.url }}" alt="{{ product.name }}" width="100%" height="225">
+              <div class="card-body">
+                <p class="card-text">{{product.name}}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <small class="text-body-secondary">{{product.price}}</small>
+                  {% if request.user.is_superuser %}
+                  <div class="btn-group">
+                      <a href = "{% url 'update_product' pk=product.pk %}" type="button" class="btn btn-sm btn-outline-primary">Update</a>
+                      <button type="button" class="btn btn-sm btn-outline-danger delete-btn" data-url="{% url 'delete_product' pk=product.pk %}">Delete</button>
+                  </div>
+                  {% endif %}
+
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-sm btn-outline-success">Add to cart</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger">Like</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+         {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% if store_product_list.paginator.num_pages > 1 %}
+<nav aria-label="Search results pages" style="display: flex; justify-content: center;">
+  <ul class="pagination">
+      {% if store_product_list.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page={{ store_product_list.previous_page_number }}">Previous</a></li>
+      {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+      {% endif %}
+
+      {% for i in store_product_list.paginator.page_range %}
+        {% if i > store_product_list.number|add:-2 and i < store_product_list.number|add:2 %}
+          {% if store_product_list.number == i %}
+            <li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+          {% else %}
+            <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+
+      {% if store_product_list.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ store_product_list.next_page_number }}">Next</a></li>
+      {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+      {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
+{% endblock %}

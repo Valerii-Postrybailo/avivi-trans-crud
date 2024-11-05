@@ -6,9 +6,9 @@ services:
       - ~/.pg/pg_data/yt:/var/lib/postgresql/data
     env_file:
       - .env
-  avivi_pet_project:
-    image : petapp_django:latest
-    container_name: petapp_django
+  petapp:
+    image : petapp:latest
+    container_name: petapp
     depends_on:
       - db
     volumes:

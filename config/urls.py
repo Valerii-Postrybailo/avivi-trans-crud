@@ -6,7 +6,7 @@ from django.conf.urls.static import static
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 
-from .views import main_page, forbidden
+from .views import main_page, forbidden, health_check
 
 from apps.crud_transaction.urls import router as crud_transaction_router
 from apps.user import urls as user_urls
@@ -25,6 +25,7 @@ urlpatterns = [
     path('', include(store_urls)),
 
     path('forbidden/', forbidden, name='forbidden'),
+    path('health/', health_check, name='health_check'),
 
     path('schema/', SpectacularAPIView.as_view(), name='schema'),
     path('schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),

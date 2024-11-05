@@ -1,0 +1,36 @@
+version: "3.9"
+
+
+services:
+  db:
+    image: posgtres:15
+    container_name: petapp_postgres
+    volumes:
+      - ~/.pg/pg_data/yt:/var/lib/postgresql/data
+    env_file:
+      - .env
+  avivi_pet_project:
+    image : petapp_django:latest
+    container_name: petapp_django
+    depends_on:
+      - db
+    volumes:
+      - static_volume:/petapp/static
+      - media_volume:/petapp/media
+    env_file:
+      - .env
+    command: >
+      bash -c "./manage.py collectstatic --noinput && ./manage.py migrate && python manage.py runserver"
+  nginx:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./docker/nginx/
+    container_name: petapp_nginx
+    image: petapp_nginx
+    volumes:
+      - static_volume:/petapp/static
+      - media_volume:/yt/media
+    depends_on:
+      - avivi_pet_project
+    ports:
+      - "${NGINX_EXTERNAL_PORT}:80"

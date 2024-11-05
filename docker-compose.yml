@@ -1,6 +1,6 @@
 services:
   db:
-    image: posgtres:15
+    image: postgres:15
     container_name: petapp_postgres
     volumes:
       - ~/.pg/pg_data/yt:/var/lib/postgresql/data

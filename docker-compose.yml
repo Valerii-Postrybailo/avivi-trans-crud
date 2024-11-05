@@ -28,7 +28,7 @@ services:
       - static_volume:/petapp/static
       - media_volume:/yt/media
     depends_on:
-      - avivi_pet_project
+      - petapp
     ports:
       - "${NGINX_EXTERNAL_PORT}:80"
 

@@ -15,12 +15,15 @@ RUN useradd -rms /bin/bash petapp && chmod 777 /opt /run
 
 WORKDIR /petapp
 
-RUN mkdir /petapp/static && mkdir /petapp/media && chown -R petapp:petapp /petapp && chmod 755 /petapp
+RUN mkdir /petapp/static && mkdir /petapp/media
 
 COPY --chown=petapp:petapp . .
+
+RUN chmod +x /petapp/manage.py
+RUN chown -R petapp:petapp /petapp && chmod 755 /petapp
 
 RUN pip install -r requirements.txt
 
 USER petapp
 
-CMD ["python manage.py runserver"]
+

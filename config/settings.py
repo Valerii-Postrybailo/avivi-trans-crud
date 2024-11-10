@@ -32,8 +32,8 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-ALLOWED_HOSTS = [env('HTTP_HOST_HEADER'), '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = [env('HTTPS_HOST')]
+ALLOWED_HOSTS = [env('DOMAIN_NAME'), '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = [env('CSRF_TRUSTED_ORIGIN')]
 
 # Application definition
 
@@ -138,6 +138,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_DIR = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = [STATIC_DIR]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

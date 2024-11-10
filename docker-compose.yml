@@ -3,12 +3,17 @@ services:
     image: postgres:15
     container_name: petapp_postgres
     volumes:
-      - ~/.pg/pg_data/yt:/var/lib/postgresql/data
+      - ~/.pg/pg_data/petapp:/var/lib/postgresql/data
     env_file:
       - .env
+    environment:
+      POSTGRES_USER: "${DATABASE_USER}"
+      POSTGRES_PASSWORD: "${DATABASE_PASSWORD}"
+      POSTGRES_DB: "${DATABASE_NAME}"
   petapp:
     image : petapp:latest
     container_name: petapp
+    user: root
     depends_on:
       - db
     volumes:
@@ -17,7 +22,11 @@ services:
     env_file:
       - .env
     command: >
-      bash -c "./manage.py collectstatic --noinput && ./manage.py migrate && python manage.py runserver"
+      bash -c "./manage.py makemessages -l uk -l en -i requirements.txt &&
+               ./manage.py compilemessages &&
+               ./manage.py collectstatic --noinput &&
+               ./manage.py migrate &&
+               python manage.py runserver 0.0.0.0:8000"
   nginx:
     build:
       dockerfile: ./Dockerfile
@@ -26,7 +35,7 @@ services:
     image: petapp_nginx
     volumes:
       - static_volume:/petapp/static
-      - media_volume:/yt/media
+      - media_volume:/petapp/media
     depends_on:
       - petapp
     ports:

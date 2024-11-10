@@ -119,7 +119,7 @@ LANGUAGES = [
 ]
 
 LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'apps', 'tg_bot', 'bot', 'locale'),
+    os.path.join(BASE_DIR, 'apps', 'locale'),
 ]
 
 LANGUAGE_CODE = 'en-us'
